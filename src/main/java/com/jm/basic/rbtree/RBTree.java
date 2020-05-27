@@ -81,11 +81,11 @@ public class RBTree<T extends Comparable<T>> {
 			} else {
 				Node<T> parentNode = deleteNode.parent;
 				boolean left = deleteNode.isLeftNode();
-				if (left) {
+				if (left)
 					parentNode.left = null;
-				} else {
+				else
 					parentNode.right = null;
-				}
+
 				balanceDeletion(parentNode, deleteNode);
 			}
 		}
@@ -122,11 +122,11 @@ public class RBTree<T extends Comparable<T>> {
 				Node<T> parentNode = deleteNode.parent;
 				left.isRed = false;
 				boolean isLeft = deleteNode.isLeftNode();
-				if (isLeft) {
+				if (isLeft)
 					parentNode.left = left;
-				} else {
+				else
 					parentNode.right = left;
-				}
+
 				left.parent = parentNode;
 				deleteNode.parent = null;
 				deleteNode.right = null;
@@ -152,17 +152,15 @@ public class RBTree<T extends Comparable<T>> {
 	private Node<T> findNode(Node<T> entry, T query) {
 		int v = query.compareTo(entry.t);
 		if (v == 1) {
-			if (entry.right == null) {
+			if (entry.right == null)
 				return entry;
-			} else {
+			else
 				return findNode(entry.right, query);
-			}
 		} else if (v == -1) {
-			if (entry.left == null) {
+			if (entry.left == null)
 				return entry;
-			} else {
+			else
 				return findNode(entry.left, query);
-			}
 		} else {
 			return entry;
 		}
@@ -206,12 +204,12 @@ public class RBTree<T extends Comparable<T>> {
 			if (isChildLeft) {
 				rotateToRight(grandpaNode, this::changeColor2);
 			} else {
-				rotateToLeft(parentNode, this::chargeColor0);
+				rotateToLeft(parentNode,  this::changeColor0);
 				rotateToRight(grandpaNode, this::changeColor2);
 			}
 		} else {
 			if (isChildLeft) {
-				rotateToRight(parentNode, this::chargeColor0);
+				rotateToRight(parentNode,  this::changeColor0);
 				rotateToLeft(grandpaNode, this::changeColor2);
 			} else {
 				rotateToLeft(grandpaNode, this::changeColor2);
@@ -356,28 +354,22 @@ public class RBTree<T extends Comparable<T>> {
 			leftChildNode.parent = grandpaNode;
 		updateLeftRotateHigh(parentNode, grandpaNode);
 	}
-
-	// 没有节点不变色
-	private Consumer<Node<T>> chargeColor0(Node<T> grandpaNode, Node<T> parentNode) {
-		return e -> {
-		};
+	//节点不变色
+	private Consumer<Node<T>> changeColor0(Node<T> grandpaNode, Node<T> parentNode) {
+		return e -> {};
 	}
-
 	// 两个节点变色
 	private Consumer<Node<T>> changeColor2(Node<T> grandpaNode, Node<T> parentNode) {
 		grandpaNode.isRed = true;
 		parentNode.isRed = false;
-		return e -> {
-		};
+		return e -> {};
 	}
 
 	// 三个节点变色
 	private Consumer<Node<T>> changeColor3(Node<T> grandpaNode, Node<T> parentNode) {
 		parentNode.isRed = grandpaNode.isRed;
 		grandpaNode.isRed = false;
-		return e -> {
-			e.isRed = false;
-		};
+		return e -> {e.isRed = false;};
 	}
 
 	/*
@@ -451,24 +443,7 @@ public class RBTree<T extends Comparable<T>> {
 			printTree(childList);
 	}
 
-	public static void main(String[] args) {
-		RBTree<Integer> rbTree = new RBTree<>();
-		for (int i = 1; i<=15; i++) {
-			rbTree.insert(i);
-		}
-
-		rbTree.printTree();
-		System.out.println("tree high:" + rbTree.getTreeHigh());
-
-		for (int i = 1; i <= 15; i++) {
-			rbTree.delete(i);
-			System.out.println("delete----------" + i);
-			rbTree.printTree();
-		}
-	}
-
 	// 插入逻辑
-
 	/*
 	 * P is parent node,U is uncle node,G is grandpa node L is left node,R is right
 	 * node R is red color,B is Black color rotateToRight(Node n),rotateToLeft(Node
@@ -480,5 +455,4 @@ public class RBTree<T extends Comparable<T>> {
 	 * 1、删除节点没有子节点，直接删除 2、删除节点只有一个子节点。那么删除节点一定是黑节点，用子节点代替删除节点
 	 * 3、删除节点有两个子节点，找到删除节点的后继节点，将后继节点的值赋值给删除节点，删除后继节点
 	 */
-
 }
