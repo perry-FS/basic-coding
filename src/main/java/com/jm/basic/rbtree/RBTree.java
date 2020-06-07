@@ -204,12 +204,12 @@ public class RBTree<T extends Comparable<T>> {
 			if (isChildLeft) {
 				rotateToRight(grandpaNode, this::changeColor2);
 			} else {
-				rotateToLeft(parentNode,  this::changeColor0);
+				rotateToLeft(parentNode, this::changeColor0);
 				rotateToRight(grandpaNode, this::changeColor2);
 			}
 		} else {
 			if (isChildLeft) {
-				rotateToRight(parentNode,  this::changeColor0);
+				rotateToRight(parentNode, this::changeColor0);
 				rotateToLeft(grandpaNode, this::changeColor2);
 			} else {
 				rotateToLeft(grandpaNode, this::changeColor2);
@@ -227,7 +227,7 @@ public class RBTree<T extends Comparable<T>> {
 			Node<T> brotherNode = parentNode.right;
 			if (brotherNode.isRed) {
 				rotateToLeft(parentNode, this::changeColor2);
-				balanceDeletion(parentNode,deleteNode);
+				balanceDeletion(parentNode, deleteNode);
 			} else {
 				Node<T> leftNephew = brotherNode.left;
 				Node<T> rightNephew = brotherNode.right;
@@ -254,7 +254,7 @@ public class RBTree<T extends Comparable<T>> {
 			Node<T> brotherNode = parentNode.left;
 			if (brotherNode.isRed) {
 				rotateToRight(parentNode, this::changeColor2);
-				balanceDeletion(parentNode,deleteNode);
+				balanceDeletion(parentNode, deleteNode);
 			} else {
 				Node<T> leftNephew = brotherNode.left;
 				Node<T> rightNephew = brotherNode.right;
@@ -352,22 +352,28 @@ public class RBTree<T extends Comparable<T>> {
 			leftChildNode.parent = grandpaNode;
 		updateLeftRotateHigh(parentNode, grandpaNode);
 	}
-	//节点不变色
+
+	// 节点不变色
 	private Consumer<Node<T>> changeColor0(Node<T> grandpaNode, Node<T> parentNode) {
-		return e -> {};
+		return e -> {
+		};
 	}
+
 	// 两个节点变色
 	private Consumer<Node<T>> changeColor2(Node<T> grandpaNode, Node<T> parentNode) {
 		grandpaNode.isRed = true;
 		parentNode.isRed = false;
-		return e -> {};
+		return e -> {
+		};
 	}
 
 	// 三个节点变色
 	private Consumer<Node<T>> changeColor3(Node<T> grandpaNode, Node<T> parentNode) {
 		parentNode.isRed = grandpaNode.isRed;
 		grandpaNode.isRed = false;
-		return e -> {e.isRed = false;};
+		return e -> {
+			e.isRed = false;
+		};
 	}
 
 	/*
