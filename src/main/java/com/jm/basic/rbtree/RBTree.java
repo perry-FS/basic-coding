@@ -227,8 +227,7 @@ public class RBTree<T extends Comparable<T>> {
 			Node<T> brotherNode = parentNode.right;
 			if (brotherNode.isRed) {
 				rotateToLeft(parentNode, this::changeColor2);
-				parentNode.isRed = false;
-				parentNode.right.isRed = true;
+				balanceDeletion(parentNode,deleteNode);
 			} else {
 				Node<T> leftNephew = brotherNode.left;
 				Node<T> rightNephew = brotherNode.right;
@@ -255,8 +254,7 @@ public class RBTree<T extends Comparable<T>> {
 			Node<T> brotherNode = parentNode.left;
 			if (brotherNode.isRed) {
 				rotateToRight(parentNode, this::changeColor2);
-				parentNode.isRed = false;
-				parentNode.left.isRed = true;
+				balanceDeletion(parentNode,deleteNode);
 			} else {
 				Node<T> leftNephew = brotherNode.left;
 				Node<T> rightNephew = brotherNode.right;
