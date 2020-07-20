@@ -142,13 +142,7 @@ public class RBTree<T extends Comparable<T>> {
 		}
 	}
 
-	/**
-	 * 查找值为query的节点或者query作为插入值的父节点
-	 * 
-	 * @param entry
-	 * @param query
-	 * @return
-	 */
+	//查找值为query的节点或者query作为插入值的父节点
 	private Node<T> findNode(Node<T> entry, T query) {
 		int v = query.compareTo(entry.t);
 		if (v == 1) {
@@ -166,12 +160,7 @@ public class RBTree<T extends Comparable<T>> {
 		}
 	}
 
-	/**
-	 * 找到entry节点的最左子节点
-	 * 
-	 * @param entry
-	 * @return
-	 */
+	//找到entry节点的最左子节点
 	private Node<T> findNext(Node<T> entry) {
 		while (entry.left != null) {
 			entry = entry.left;
@@ -180,7 +169,10 @@ public class RBTree<T extends Comparable<T>> {
 	}
 
 	/**
-	 * 自平衡
+	 * 插入自平衡
+	 * 
+	 * @param parentNode 插入节点的父节点
+	 * @param insertNode 插入节点
 	 */
 	private void balanceInsertion(Node<T> parentNode, Node<T> insertNode) {
 		if (!parentNode.isRed)
@@ -217,6 +209,12 @@ public class RBTree<T extends Comparable<T>> {
 		}
 	}
 
+	/**
+	 * 删除自平衡
+	 * 
+	 * @param parentNode 删除节点的父节点
+	 * @param deleteNode 删除节点
+	 */
 	private void balanceDeletion(Node<T> parentNode, Node<T> deleteNode) {
 		if (deleteNode.isRed)
 			return;
@@ -280,10 +278,8 @@ public class RBTree<T extends Comparable<T>> {
 			}
 		}
 	}
-
-	/*
-	 * 右旋
-	 */
+	
+	//右旋
 	private void rotateToRight(Node<T> grandpaNode, BiFunction<Node<T>, Node<T>, Consumer<Node<T>>> changeColor) {
 		Node<T> parentNode = grandpaNode.left;
 		if (parentNode == null)
@@ -309,9 +305,8 @@ public class RBTree<T extends Comparable<T>> {
 		updateRightRotateHigh(parentNode, grandpaNode);
 	}
 
-	/*
-	 * 更新右旋时高度
-	 */
+	
+	//更新右旋时树高
 	private void updateRightRotateHigh(Node<T> parentNode, Node<T> grandpaNode) {
 		// parent节点和其左子树高度都减1
 		parentNode.high = parentNode.high - 1;
@@ -325,9 +320,8 @@ public class RBTree<T extends Comparable<T>> {
 			increaseHigh(Arrays.asList(rightNode));
 	}
 
-	/*
-	 * 左旋
-	 */
+	
+	//左旋
 	private void rotateToLeft(Node<T> grandpaNode, BiFunction<Node<T>, Node<T>, Consumer<Node<T>>> changeColor) {
 		Node<T> parentNode = grandpaNode.right;
 		if (parentNode == null)
@@ -376,9 +370,7 @@ public class RBTree<T extends Comparable<T>> {
 		};
 	}
 
-	/*
-	 * 更新左旋时高度
-	 */
+	//更新左旋时高度
 	private void updateLeftRotateHigh(Node<T> parentNode, Node<T> grandpaNode) {
 		// parent节点和其左子树高度都减1
 		parentNode.high = parentNode.high - 1;
@@ -427,9 +419,6 @@ public class RBTree<T extends Comparable<T>> {
 			System.out.println("rb tree is empty");
 			return;
 		}
-//		int x = 8,y=2;
-//		int maxWidth = (int) (Math.pow(2, totalHigh-2)*(x+y)-y);
-//		int gap = maxWidth/2;
 		List<Node<T>> nodeList = Arrays.asList(root);
 		printTree(nodeList);
 	}
@@ -446,17 +435,4 @@ public class RBTree<T extends Comparable<T>> {
 		if (!childList.isEmpty())
 			printTree(childList);
 	}
-
-	// 插入逻辑
-	/*
-	 * P is parent node,U is uncle node,G is grandpa node L is left node,R is right
-	 * node R is red color,B is Black color rotateToRight(Node n),rotateToLeft(Node
-	 * n)
-	 */
-
-	// 删除逻辑
-	/*
-	 * 1、删除节点没有子节点，直接删除 2、删除节点只有一个子节点。那么删除节点一定是黑节点，用子节点代替删除节点
-	 * 3、删除节点有两个子节点，找到删除节点的后继节点，将后继节点的值赋值给删除节点，删除后继节点
-	 */
 }
